@@ -1,8 +1,7 @@
-FROM uhub.service.ucloud.cn/kain/node:18-alpine AS base
+FROM node:18-alpine AS base
 
 FROM base AS deps
 
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 RUN apk add --no-cache libc6-compat
 
 WORKDIR /app
@@ -14,7 +13,6 @@ RUN yarn install
 
 FROM base AS builder
 
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 RUN apk update && apk add --no-cache git
 
 ENV OPENAI_API_KEY=""
